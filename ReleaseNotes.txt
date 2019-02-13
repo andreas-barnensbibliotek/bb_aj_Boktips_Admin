@@ -1,0 +1,17 @@
+﻿<h3>bb_aj_Boktips_Admin</h3>
+<p class="Contributor">
+	Andreas Josefsson <br />
+	<a href="mailto:andreas@barnensbibliotek.se">andreas@barnensbibliotek.se</a><br />
+	<a href=http://www.frontdata.se>http://www.frontdata.se</a><br />
+	This extension was created using <a href="http://www.christoc.com">Christoc's</a> Module Development Templates for DNN.
+</p>
+<hr/>
+<div class="License">
+	<h3>About the bb_aj_Boktips_Admin</h3>
+	<p class="Owner">
+		<b>Version 1.0.0</b><br /><br />
+	</p>
+	<p>Denna modul är specialbygd för barnens bibliotek. Modulen skall användas för att administrera barnensboktip</p>
+	
+	
+</div>

@@ -1,0 +1,9 @@
+D:\wwwroot\dotnetnuke_v5\bin\bb_aj_Boktips_Admin.dll.config
+D:\wwwroot\dotnetnuke_v5\bin\bb_aj_Boktips_Admin.dll
+D:\wwwroot\dotnetnuke_v5\bin\bb_aj_Boktips_Admin.pdb
+D:\wwwroot\dotnetnuke_v5\bin\bb_aj_Boktips_Admin.xml
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Debug\bb_aj_Boktips_Admin.vbprojAssemblyReference.cache
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Debug\bb_aj_Boktips_Admin.vbproj.CoreCompileInputs.cache
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Debug\bb_aj_Boktips_Admin.dll
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Debug\bb_aj_Boktips_Admin.xml
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Debug\bb_aj_Boktips_Admin.pdb

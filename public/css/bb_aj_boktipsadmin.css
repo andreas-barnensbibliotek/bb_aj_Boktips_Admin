@@ -1,0 +1,39 @@
+#bb_aj_modalContainer {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  cursor: pointer; }
+  #bb_aj_modalContainer .bb_aj_modalheader .buttonblock {
+    float: right; }
+  #bb_aj_modalContainer .bb_aj_modalcontent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    padding: 1rem;
+    color: #000;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    overflow-y: auto;
+    overflow-x: auto;
+    min-width: 320px;
+    max-height: 60%;
+    height: 70%;
+    width: 54%; }
+
+#bb_aj_boktipsAdmin_Mod .buttonBlock {
+  min-width: 50px;
+  text-align: center; }
+
+#bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(even) {
+  background: #CCC; }
+
+#bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(odd) {
+  background: #FFF; }

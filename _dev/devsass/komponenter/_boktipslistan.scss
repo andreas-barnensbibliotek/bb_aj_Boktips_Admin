@@ -1,0 +1,16 @@
+﻿#bb_aj_boktipsAdmin_Mod{
+    .buttonBlock {
+        min-width: 50px;
+        text-align: center;
+    }
+
+    #bb_aj_boktipsAdminList {
+        tr:nth-child(even) {
+            background: #CCC;
+        }
+
+        tr:nth-child(odd) {
+            background: #FFF;
+        }
+    }
+}
