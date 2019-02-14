@@ -10,20 +10,20 @@
 <tbody>
 	{{#each Boktips}}	
 		<!-- botips start -->
-		<tr class="bb_aj_boktips_Item_Row">
+		<tr class="bb_aj_boktips_Item_Row" data-tipid="{{TipID}}">
 			<td class="buttonBlock">
 				<a class="btn btn-default">
-					<input type="checkbox" class="bb_aj_valtboktips" data-tipid="{{TipID}} />
+					<input type="checkbox" class="bb_aj_valtboktips" data-tipid="{{TipID}}" />
 					<span class="kk_aj_approved" style="display:none;">{{Approved}}</span></a>
 			</td>
 			<td class="hidden-xs">{{Userid}}</td>
 			<td>{{UserName}}</td>
                 
-			<td>{{Review}}
+			<td>{{{Review}}}
 			</td>
 			<td class="buttonBlock">
-				<a class="btn btn-default bb_aj_approve" data-tipid="{{TipID}}><em class="fas fa-pencil-alt"></em></a>
-				<a class="btn btn-danger bb_aj_delete" data-tipid="{{TipID}}><em class="fa fa-trash"></em></a>
+				<a class="btn btn-default bb_aj_approve" data-tipid="{{TipID}}"><em class="fas fa-pencil-alt"></em></a>
+				<a class="btn btn-danger bb_aj_delete" data-tipid="{{TipID}}"><em class="fa fa-trash"></em></a>
 			</td>
 
 		</tr>

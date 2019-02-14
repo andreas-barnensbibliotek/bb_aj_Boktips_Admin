@@ -45,15 +45,15 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	var dt = __webpack_require__(1);
-	var edt = __webpack_require__(8);
 
 	var $ = __webpack_require__(2);
 	   
 	$(function () {
 
 	    let init = function () {
+	       
 	        dt.init();
-	        edt.init('#bb_aj_modalbody');
+	        
 	    }
 
 	    init();      
@@ -69,10 +69,10 @@
 	let $ = __webpack_require__(2);
 	let _dt = __webpack_require__(3);
 	let _dtEvent = __webpack_require__(4);
-	let _hh = __webpack_require__(5)
-	let _service = __webpack_require__(6);
-	var appsettingsobject = __webpack_require__(7);
-	var appsettings = appsettingsobject.config;
+	let _hh = __webpack_require__(6)
+	let _service = __webpack_require__(10);
+	let appsettingsobject = __webpack_require__(8);
+	let appsettings = appsettingsobject.config;
 
 	module.exports = {
 	    init: function () {
@@ -91,12 +91,17 @@
 	        _dtEvent.init();
 	    },
 	    serviceHandler: function () {
-	        let jsondatapromise = _service.getjsondata('https://www2.barnensbibliotek.se/Api_v3.1/boktips/typ/ByUserId/val/7017/txtval/0/devkey/alf/?type=json');
-	        
+	        //let jsondatapromise = _service.getjsondata('https://www2.barnensbibliotek.se/Api_v3.1/boktips/typ/ByUserId/val/7017/txtval/0/devkey/alf/?type=json');
+	        let jsondatapromise = _service.getjsondata(appsettings.api.boktipslistor.getboktipslistToApprove());
+
 	        jsondatapromise.then(jsondata => {
+
+	            appsettings.dataset.currentdatalist = jsondata;
+
 	            _hh.injecthtmltemplate("#bb_aj_boktipsAdminList", appsettings.handlebartemplate.hb_booktipList_tmp, jsondata, function () {
+	                console.log("funkar1:" + appsettings.dataset.currentdatalist);
 	                _dt.RunDataTable('#bb_aj_boktipsAdminList');
-	                console.log("funkar");
+	                console.log("funkar2:" + appsettings.dataset.currentdatalist);
 	            });
 	        });    
 	    },
@@ -25115,7 +25120,9 @@
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(2);
+	let fillobj = __webpack_require__(5);
+	let servicecall = __webpack_require__(9);
+	let $ = __webpack_require__(2);
 
 	module.exports = {
 	    init: function () {
@@ -25130,22 +25137,90 @@
 	    },
 	    bindEvent: function (userid) {
 	        let that = this;
-	        this.$bb_aj_approve.on("click", function () {
+	        this.$body.on('click', '.bb_aj_approve', function (e) {
+	            let id = $(this).attr('data-tipid');
+	            fillobj.getCurrentItem(id);
 	            that.$bb_aj_modalContainer.show();
+	            return false;
+	        });
+	        this.$body.on('click', '.bb_aj_delete', function (e) {
+	            let id = $(this).attr('data-tipid');
+	            fillobj.deleteitemBox(id);
+	            that.$bb_aj_modalContainer.show();
+	            return false;
+	        });
+
+	        this.$body.on('click', '.bb_aj_Deleteboktips', function (e) {
+	            let id = $(this).attr('data-tipid');
+	            fillobj.deleteitemBox(id);
+	            that.$bb_aj_modalContainer.show();
+	            return false;
+	        });
+
+	        this.$body.on('change', '.bb_aj_valtboktips', function (e) {
+	            let id = $(this).attr('data-tipid');
+	            let val = 0;
+	            
+	            if (this.checked) {
+	               val = 1;               
+	            }
+	            if (servicecall.approvetip(id, val)) {
+	                alert("funkar");
+	            };
+
+	            $(this).val(this.checked); 
+	            return false;
 	        });
 
 	        this.$body.on('click', '.bb_aj_closeModal', function (e) {
 	            that.$bb_aj_modalContainer.hide();
 	            return false;
-	        });   
+	        });
+
+	        
+
 	    },
 	    render: function () {
-	        
+
 	    }
 	}
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	let _hh = __webpack_require__(6)
+	let edt = __webpack_require__(7);
+	let appsettingsobject = __webpack_require__(8);
+	let appsettings = appsettingsobject.config;
+
+	module.exports = {
+	    
+	    getCurrentItem: function (id) {
+	        let _currentobj = appsettings.dataset.currentdatalist;
+
+	        let currobj = _currentobj.Boktips.filter(item => item.TipID == id);
+	                
+	        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_editor_tmp, currobj, function () {
+	            edt.remove();
+	            edt.init("#bb_aj_modalbody");
+	                       
+	            return true;
+	        });             
+	    },
+	    deleteitemBox: function (tipid) {
+	        let obj = { "TipID": tipid };
+
+	        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_delbox_tmp, obj, function () {            
+	            return true;
+	        });    
+	    }
+
+	} //end moduleexport
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(2);
@@ -25162,7 +25237,155 @@
 	}
 
 /***/ }),
-/* 6 */
+/* 7 */
+/***/ (function(module, exports) {
+
+	
+	module.exports = {
+	    _editorn: tinyMCE,
+	    init: function (CSSidselector) {
+	                   
+	        this._editorn.init({
+	            selector: CSSidselector,
+	            menubar: false,
+	            toolbar: 'undo redo | styleselect | bold italic | link image'
+	        });
+
+	    },//end init
+	    remove: function () {
+	        this._editorn.remove();
+	    },
+	    clear: function () {
+	        this._editorn.activeEditor.setContent('');
+	    },
+	    setcontent: function (content) {
+	        this._editorn.activeEditor.setContent(content);
+	    }
+	} //end moduleexport
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	
+	module.exports = {
+	    config: (function () {
+	        let _apiserver = "http://localhost:59015";
+	        let _dnnURL = "http://localdev.kivdev.se";
+	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
+	        //let _dnnURL = "http://dev1.barnensbibliotek.se";
+	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
+	        //let _dnnURL = "http://nytt.barnensbibliotek.se";
+	        //let _apiserver = "https://www2.barnensbibliotek.se";
+	        //let _dnnURL = "https://www.barnensbibliotek.se";
+	        let _devkey = "alf";
+	        let _apidevkeyend = "/devkey/" + _devkey + "/?type=jsonp&callback=?";
+	        let _htmltemplateURL = "/DesktopModules/bb_aj_Boktips_Admin/template/";        
+	        let _currentdatalist;
+	        //// template
+	        
+	        let _hb_booktipList_template = _htmltemplateURL + "template_datatableRow.txt";   
+	        let _hb_editor_template = _htmltemplateURL + "template_editor.txt"; 
+	        let _hb_deletbox_template = _htmltemplateURL + "template_tabort.txt";
+	        
+	        // användarens senaste boktips
+	        let _fn_booktipList = function (userid) {
+	            return _apiserver + "/Api_v1/boktips/bylatest/1/devkey/" + _devkey + "/?type=json";
+	        }
+	        let _fn_booktipDelete = function () {            
+	            return _apiserver + "/Api_v3.1/boktips/typ/addboktips/devkey/" + _devkey + "/?type=json";
+	        }
+	        let _fn_booktipApprove = function (tipid, val) {
+	            return _apiserver + "/Api_v3.1/boktips/typ/approve/val/" + tipid + "/txtval/" + val + "/devkey/" + _devkey + "/?type=json";
+	        }
+	        let _fn_booktipListToAprove = function () {
+	            return _apiserver + "/Api_v3.1/boktips/typ/toapprove/val/0/txtval/0/devkey/" + _devkey + "/?type=json";
+	        }
+	        let _fn_booktipListAll = function () {
+	            return _apiserver + "/Api_v3.1/boktips/typ/getall/val/0/txtval/0/devkey/" + _devkey + "/?type=json";
+	        }
+	           
+	        return {
+	            apiserver: _apiserver,
+	            dnnURL: _dnnURL,
+	            htmltemplateurl: _dnnURL + _htmltemplateURL,
+	            devkey: _devkey,
+	            handlebartemplate: {
+	                hb_booktipList_tmp: _hb_booktipList_template,
+	                hb_editor_tmp: _hb_editor_template,
+	                hb_delbox_tmp: _hb_deletbox_template
+	            },
+	            api: {                
+	                boktipslistor: {
+	                    getboktipslistToApprove: _fn_booktipListToAprove,
+	                    getboktipslistAll: _fn_booktipListAll
+	                },
+	                approve: _fn_booktipApprove,
+	                delete: _fn_booktipDelete,
+	                autocomplete: {
+	                    geturl: ""
+	                },                
+	                devkeyend: _apidevkeyend
+	            },
+	            dataset: {
+	                currentdatalist:  _currentdatalist
+	            },
+
+	            debug: "false"
+	        }
+	    })(),
+	    
+	}
+
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	
+	let _service = __webpack_require__(10);
+	let appsettingsobject = __webpack_require__(8);
+	let appsettings = appsettingsobject.config;
+
+	module.exports = {
+	    approvetip: function (tipid, val) {
+	        let jsondatapromise = _service.getjsondata(appsettings.api.approve(tipid, val));
+
+	        jsondatapromise
+	            .then(jsondata => { return true; })
+	            .catch(err => false);
+	    },
+	    deletetip: function (tipid) {
+	        let dataopt = {
+	            "Approved": "0",
+	            "Author": "",
+	            "Bookid": "",
+	            "Title": "",
+	            "Userage": "0",
+	            "HighAge": "0",
+	            "LowAge": "0",
+	            "Review": "",
+	            "Tiptype": "0",
+	            "Userid": "",
+	            "UserName": "",
+	            "Category": "0",
+	            "TipID": tipid
+	        }
+
+	        let jsondatapromise = _service.fetchjsonpdata(appsettings.api.delete, dataopt);
+
+	        jsondatapromise
+	            .then(jsondata => { return true; })
+	            .catch(err => false);
+	       
+
+	    }
+	    
+	}
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 	
@@ -25188,80 +25411,6 @@
 	    }
 	}
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-	
-	module.exports = {
-	    config: (function () {
-	        let _apiserver = "http://localhost:59015";
-	        let _dnnURL = "http://localdev.kivdev.se";
-	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
-	        //let _dnnURL = "http://dev1.barnensbibliotek.se";
-	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
-	        //let _dnnURL = "http://nytt.barnensbibliotek.se";
-	        //let _apiserver = "https://www2.barnensbibliotek.se";
-	        //let _dnnURL = "https://www.barnensbibliotek.se";
-	        let _devkey = "alf";
-	        let _apidevkeyend = "/devkey/" + _devkey + "/?type=jsonp&callback=?";
-	        let _htmltemplateURL = "/DesktopModules/bb_aj_Boktips_Admin/template/";        
-	        
-	        //// template
-	        
-	        let _hb_booktipList_template = _htmltemplateURL + "template_datatableRow.txt";        
-	        // användarens senaste boktips
-	        let _fn_booktipList = function (userid) {
-	            return _apiserver + "/Api_v1/boktips/bylatest/1/devkey/" + _devkey + "/?type=json";
-	        }
-	        
-	        return {
-	            apiserver: _apiserver,
-	            dnnURL: _dnnURL,
-	            htmltemplateurl: _dnnURL + _htmltemplateURL,
-	            devkey: _devkey,
-	            handlebartemplate: {
-	                hb_booktipList_tmp: _hb_booktipList_template
-	            },
-	            api: {                
-	                boktipslistor: {
-	                    getboktipslist: _fn_booktipList                    
-	                },                
-	                autocomplete: {
-	                    geturl: ""
-	                },                
-	                devkeyend: _apidevkeyend
-	            },          
-
-	            debug: "false"
-	        }
-	    })(),
-	    
-	}
-
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-	
-	module.exports = {
-	    _editorn: tinymce,
-	    init: function (CSSidselector) {
-	                   
-	        this._editorn.init({
-	            selector: CSSidselector,
-	            menubar: false,
-	            toolbar: 'undo redo | styleselect | bold italic | link image'
-	        });
-
-	    },//end init
-	    clear: function () {
-	        this._editorn.activeEditor.setContent('');
-	    }
-	} //end moduleexport
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,6 @@
 ﻿
 module.exports = {
-    _editorn: tinymce,
+    _editorn: tinyMCE,
     init: function (CSSidselector) {
                    
         this._editorn.init({
@@ -10,7 +10,13 @@ module.exports = {
         });
 
     },//end init
+    remove: function () {
+        this._editorn.remove();
+    },
     clear: function () {
         this._editorn.activeEditor.setContent('');
+    },
+    setcontent: function (content) {
+        this._editorn.activeEditor.setContent(content);
     }
 } //end moduleexport

@@ -228,14 +228,20 @@
     <Content Include="public\js\tinymce\tinymce_v4.js" />
     <Content Include="ReleaseNotes.txt" />
     <Content Include="Settings.ascx" />
+    <Content Include="template\template_datatableRow.txt" />
     <Content Include="View.ascx" />
     <Content Include="_dev\devjs\app.js" />
-    <Content Include="_dev\devjs\jsmoduler\external\datatables.js" />
+    <Content Include="_dev\devjs\jsmoduler\appsettings.js" />
+    <Content Include="_dev\devjs\jsmoduler\dataTablehandler\DataTableEvent.js" />
+    <Content Include="_dev\devjs\jsmoduler\dataTablehandler\DataTableMainHandler.js" />
+    <Content Include="_dev\devjs\jsmoduler\dataTablehandler\datatables.js" />
     <Content Include="_dev\devjs\jsmoduler\external\editor.js" />
     <Content Include="_dev\devjs\jsmoduler\external\mceEditor.js" />
     <Content Include="_dev\devjs\jsmoduler\external\tinymceEditorSettings.js" />
+    <Content Include="_dev\devjs\jsmoduler\Handlebar\handlebarHandler.js" />
     <Content Include="_dev\devjs\jsmoduler\main.js" />
-    <Content Include="_dev\devjs\jsmoduler\nyfil.js" />
+    <Content Include="_dev\devjs\jsmoduler\Service\OldServicehandler.js" />
+    <Content Include="_dev\devjs\jsmoduler\Service\servicehandler_Fetch.js" />
     <Content Include="_dev\jsbundle\aj_bb_boktipsadmin_KrypinbundleWebpack.1.0.js" />
     <Content Include="_dev\jsbundle\datatables\datatables.js" />
     <Content Include="_dev\jsbundle\datatables\datatables.min.js" />
@@ -287,6 +293,7 @@
     <Content Include="_dev\devsass\komponenter\_boktipslistan.scss" />
     <Content Include="_dev\devsass\komponenter\_modulContainer.scss" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
