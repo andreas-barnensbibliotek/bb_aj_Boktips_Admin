@@ -1,0 +1,71 @@
+﻿let $ = require("jquery");
+let _dt = require("./datatables.js");
+let _dtEvent = require("./DataTableEvent.js");
+let _hh = require("../Handlebar/handlebarHandler")
+let _service = require("../Service/servicehandler_Fetch");
+let appsettingsobject = require("../appsettings");
+let appsettings = appsettingsobject.config;
+
+module.exports = {
+    init: function () {
+        this.cacheDom();
+        this.bindEvent();
+        this.EventHandler();
+        this.render();
+    },
+    cacheDom: function () {
+        this.$body = $('body');
+        this.$bb_aj_boktipsAdminList_wrapper = $("#bb_aj_boktipsAdminList_wrapper");
+         this.$bb_aj_boktipsAdminALLList_wrapper = $("#bb_aj_boktipsAdminALLList_wrapper");
+    },
+    bindEvent: function (userid) {
+        let that = this;
+                
+        this.$body.on('click', '#bb_aj_listaAlla', function (e) {
+            $("#bb_aj_boktipsAdminList").DataTable().destroy();
+            that.serviceHandler("#bb_aj_boktipsAdminList", appsettings.api.boktipslistor.getboktipslistAll());
+            
+            return false;
+        });
+        this.$body.on('click', '#bb_aj_listatoApprove', function (e) {
+            $("#bb_aj_boktipsAdminList").DataTable().destroy();
+            that.serviceHandler("#bb_aj_boktipsAdminList", appsettings.api.boktipslistor.getboktipslistToApprove());
+          
+            return false;
+        });
+        
+    },
+    EventHandler: function () {
+        _dtEvent.init();
+    },
+    serviceHandler: function (cssSelector, url) {
+      
+        //let jsondatapromise = _service.getjsondata('https://www2.barnensbibliotek.se/Api_v3.1/boktips/typ/ByUserId/val/7017/txtval/0/devkey/alf/?type=json');
+        let jsondatapromise = _service.getjsondata(url);
+
+        jsondatapromise.then(jsondata => {
+
+            appsettings.dataset.currentdatalist = jsondata;
+            
+
+            $(cssSelector).DataTable({  
+                "processing": true,
+                data: jsondata.Boktips,
+                    "columns": [
+                        { "data": "TipID" }
+                    ]
+                    
+                });
+                
+                console.log("funkar2:" + appsettings.dataset.currentdatalist);
+         });
+
+       
+
+    },
+    render: function () {
+        _dt.jqueryTableInit();
+        this.serviceHandler("#bb_aj_boktipsAdminList",appsettings.api.boktipslistor.getboktipslistToApprove());
+        
+    }
+}

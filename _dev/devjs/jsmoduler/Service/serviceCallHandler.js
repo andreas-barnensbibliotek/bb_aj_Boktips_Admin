@@ -1,4 +1,4 @@
-﻿
+﻿let _service_old = require("../Service/OldServicehandler");
 let _service = require("../Service/servicehandler_Fetch");
 let appsettingsobject = require("../appsettings");
 let appsettings = appsettingsobject.config;
@@ -11,30 +11,26 @@ module.exports = {
             .then(jsondata => { return true; })
             .catch(err => false);
     },
-    deletetip: function (tipid) {
-        let dataopt = {
-            "Approved": "0",
-            "Author": "",
-            "Bookid": "",
-            "Title": "",
-            "Userage": "0",
-            "HighAge": "0",
-            "LowAge": "0",
-            "Review": "",
-            "Tiptype": "0",
-            "Userid": "",
-            "UserName": "",
-            "Category": "0",
+    deletetip: function (tipid, callback) {
+        let dataopt = {           
             "TipID": tipid
         }
 
-        let jsondatapromise = _service.fetchjsonpdata(appsettings.api.delete, dataopt);
+        _service_old.postjsondata(appsettings.api.delete(), dataopt, function (data) {
+            callback(data);
+        });      
 
-        jsondatapromise
-            .then(jsondata => { return true; })
-            .catch(err => false);
-       
+    },
+    savetip: function (tipid, rubrik, content, callback) {
+        let dataopt = {
+            "TipID": tipid,
+            "Title": rubrik,            
+            "Review": content  
+        }
+
+        _service_old.postjsondata(appsettings.api.save(), dataopt, function (data) {
+            callback(data);
+        });
 
     }
-    
 }

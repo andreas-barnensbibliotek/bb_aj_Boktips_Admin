@@ -10,6 +10,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   cursor: pointer; }
+  #bb_aj_modalContainer .bb_aj_modalheader h3 {
+    float: left; }
   #bb_aj_modalContainer .bb_aj_modalheader .buttonblock {
     float: right; }
   #bb_aj_modalContainer .bb_aj_modalcontent {
@@ -27,13 +29,36 @@
     max-height: 60%;
     height: 70%;
     width: 54%; }
+  #bb_aj_modalContainer .bekraftaModalbox {
+    padding-top: 2.0rem;
+    text-align: center;
+    margin-top: 2.0rem; }
+    #bb_aj_modalContainer .bekraftaModalbox h2 {
+      margin-bottom: 2.0rem;
+      text-align: center; }
+  #bb_aj_modalContainer .modalcontentblock {
+    clear: both; }
 
-#bb_aj_boktipsAdmin_Mod .buttonBlock {
-  min-width: 50px;
-  text-align: center; }
-
-#bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(even) {
-  background: #CCC; }
-
-#bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(odd) {
-  background: #FFF; }
+#bb_aj_boktipsAdmin_Mod {
+  background-color: #fff;
+  padding: .5rem; }
+  #bb_aj_boktipsAdmin_Mod .buttonBlock {
+    min-width: 50px;
+    text-align: center; }
+  #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(even) {
+    background: #CCC; }
+  #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(odd) {
+    background: #FFF; }
+  #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminALLList tr:nth-child(even) {
+    background: #CCC; }
+  #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminALLList tr:nth-child(odd) {
+    background: #FFF; }
+  #bb_aj_boktipsAdmin_Mod .dataTables_filter {
+    padding-bottom: .5rem; }
+  #bb_aj_boktipsAdmin_Mod .dataTables_length {
+    padding-top: .5rem; }
+  #bb_aj_boktipsAdmin_Mod .not-active {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: #ccc; }

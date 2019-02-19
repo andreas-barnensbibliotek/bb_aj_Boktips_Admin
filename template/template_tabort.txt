@@ -1,14 +1,16 @@
 ﻿<div class="bb_aj_modalcontent" >
         <div class="bb_aj_modalheader">
-			<div class="modalheadblock"><h2>Ta bort boktips!</h2> </div>
+			<div class="modalheadblock"><h3>Ta bort boktips!</h3> </div>
 			<div class="buttonblock">			
 				<a href="#" title="Stäng" class="bb_aj_closeModal"><img src="/DesktopModules/bb_aj_Boktips_Admin/css/img/Close.png" alt="Stäng" /></a>                              
             </div>
         </div>
 		
         <div id="bb_aj_modalbody" class="bb_aj_modalbody">
-           <h2>Är du säker på att du vill tabort boktipset!</h2>
-		   <button id="bb_aj_Deleteboktips" data-id="{{TipID}}">JA</button>
-		   <button id="bb_aj_avbryt" class="bb_aj_closeModal">Nej avbryt!</button>
+			<div class="bekraftaModalbox">
+			   <h2>Är du säker på att du vill tabort boktipset!</h2>
+			   <button id="bb_aj_Deleteboktips" data-tipid="{{TipID}}">JA</button>
+			   <button id="bb_aj_avbryt" class="bb_aj_closeModal">Nej avbryt!</button>
+			</div>
         </div>
     </div>

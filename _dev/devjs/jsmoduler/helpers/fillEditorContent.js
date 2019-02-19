@@ -17,12 +17,22 @@ module.exports = {
             return true;
         });             
     },
+    saveitemBox: function (tipid, rub) {
+        let obj = { "TipID": tipid, "rubrik": rub};
+
+        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_savebox_tmp, obj, function () {
+            return true;
+        });
+    },
     deleteitemBox: function (tipid) {
         let obj = { "TipID": tipid };
 
         _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_delbox_tmp, obj, function () {            
             return true;
         });    
-    }
+    },
+    editcontent: function () {
+        //edt.activeEditor.getContent('');
+    },
 
 } //end moduleexport

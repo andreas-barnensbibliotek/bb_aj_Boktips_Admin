@@ -1,4 +1,7 @@
-﻿#bb_aj_boktipsAdmin_Mod{
+﻿#bb_aj_boktipsAdmin_Mod {
+    background-color: #fff;
+    padding: .5rem;
+
     .buttonBlock {
         min-width: 50px;
         text-align: center;
@@ -13,4 +16,31 @@
             background: #FFF;
         }
     }
+
+    #bb_aj_boktipsAdminALLList {
+        tr:nth-child(even) {
+            background: #CCC;
+        }
+
+        tr:nth-child(odd) {
+            background: #FFF;
+        }
+    }
+
+    .dataTables_filter {
+        padding-bottom: .5rem;
+    }
+
+    .dataTables_length {
+        padding-top: .5rem;
+    }
+
+    .not-active {
+        pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+        color: #ccc;
+    }
+
 }
+

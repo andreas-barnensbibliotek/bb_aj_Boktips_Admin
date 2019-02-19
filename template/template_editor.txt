@@ -1,14 +1,19 @@
 ﻿<div class="bb_aj_modalcontent" data-id="{{0.TipID}}">
         <div class="bb_aj_modalheader">
+		<div class="modalheadblock"><h3>Ändrar </h3> </div>
 			<div class="buttonblock">
 			
-				<a href="#" title="Spara" class="bb_aj_editboktips"><img src="/DesktopModules/bb_aj_Boktips_Admin/css/img/save.png" alt="Spara" /></a>								
+				<a href="#" title="Spara" class="bb_aj_editboktips" id="bb_aj_SaveEditToServer" data-tipid="{{0.TipID}}"><img src="/DesktopModules/bb_aj_Boktips_Admin/css/img/save.png" alt="Spara" /></a>								
 				<a href="#" title="Stäng" class="bb_aj_closeModal"><img src="/DesktopModules/bb_aj_Boktips_Admin/css/img/Close.png" alt="Stäng" /></a>                              
             </div>
-            <label for="bb_aj_cur_title">Rubrik</label><input id="bb_aj_cur_title type="text" value="{{0.Title}}">
+            
         </div>
-		<label for="bb_aj_modalbody">Boktips</label>
+		<div class="modalcontentblock">
+		<h4>Rubrik</h4>
+		<input id="bb_aj_cur_title" type="text" value="{{0.Title}}">
+		<h4>Boktips</h4>
         <div id="bb_aj_modalbody" class="bb_aj_modalbody">
             {{{0.Review}}}
         </div>
+		</div>
     </div>

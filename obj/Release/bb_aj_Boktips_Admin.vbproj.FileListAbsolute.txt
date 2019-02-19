@@ -6,3 +6,4 @@ D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Release\bb_aj_Bo
 D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Release\bb_aj_Boktips_Admin.dll
 D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Release\bb_aj_Boktips_Admin.xml
 D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Release\bb_aj_Boktips_Admin.pdb
+D:\wwwroot\dotnetnuke_v5\DesktopModules\bb_aj_Boktips_Admin\obj\Release\bb_aj_Boktips_Admin.vbprojAssemblyReference.cache

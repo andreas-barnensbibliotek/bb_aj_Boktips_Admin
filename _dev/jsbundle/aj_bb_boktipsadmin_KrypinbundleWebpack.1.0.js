@@ -45,7 +45,6 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	var dt = __webpack_require__(1);
-
 	var $ = __webpack_require__(2);
 	   
 	$(function () {
@@ -53,7 +52,6 @@
 	    let init = function () {
 	       
 	        dt.init();
-	        
 	    }
 
 	    init();      
@@ -70,7 +68,9 @@
 	let _dt = __webpack_require__(3);
 	let _dtEvent = __webpack_require__(4);
 	let _hh = __webpack_require__(6)
-	let _service = __webpack_require__(10);
+	let _hh_helper = __webpack_require__(12);
+	let _service = __webpack_require__(11);
+	let servicecall = __webpack_require__(9);
 	let appsettingsobject = __webpack_require__(8);
 	let appsettings = appsettingsobject.config;
 
@@ -82,32 +82,117 @@
 	        this.render();
 	    },
 	    cacheDom: function () {
-	        
+	        this.$body = $('body');
+	        this.$bb_aj_listatoApprove = $("#bb_aj_listatoApprove");
+	        this.$bb_aj_listaAlla = $("#bb_aj_listaAlla");
+	        this.$bb_aj_boktipsAdminList = $("#bb_aj_boktipsAdminList");
+	        this.$bb_aj_boktipsAdminALLList = $("#bb_aj_boktipsAdminALLList");
 	    },
 	    bindEvent: function (userid) {
-	       
+	        let that = this;
+	                
+	        this.$body.on('click', '#bb_aj_listaAlla', function (e) {
+	            $(this).addClass("not-active");
+	            that.$bb_aj_listatoApprove.removeClass("not-active");
+
+	            that.$bb_aj_boktipsAdminList.hide();
+	            let datatables = that.$bb_aj_boktipsAdminList.DataTable();
+	            datatables.destroy();
+	                        
+	            that.serviceHandler("#bb_aj_boktipsAdminALLList", appsettings.api.boktipslistor.getboktipslistAll(), function(){
+	                that.$bb_aj_boktipsAdminALLList.show();
+	            });
+	                       
+	            return false;
+	        });
+
+	        this.$body.on('click', '#bb_aj_listatoApprove', function (e) {        
+	            $(this).addClass("not-active");
+	            that.$bb_aj_listaAlla.removeClass("not-active");
+	            that.$bb_aj_boktipsAdminALLList.hide();
+
+	            let datatables = that.$bb_aj_boktipsAdminALLList.DataTable();
+	            datatables.destroy();            
+	            
+	            that.serviceHandler("#bb_aj_boktipsAdminList", appsettings.api.boktipslistor.getboktipslistToApprove(), function () {
+	                that.$bb_aj_boktipsAdminList.show();
+	            });           
+	         
+	            return false;
+	        });
+
+	        this.$body.on('click', '#bb_aj_Deleteboktips', function (e) {
+	            let id = $(this).attr('data-tipid');
+
+	            servicecall.deletetip(id, function (isok) {
+	                that.updatetable();
+	            });
+
+	            $("#bb_aj_modalContainer").hide();
+	            return false;
+	        });
+
+	        this.$body.on('click', '#bb_aj_Saveboktips', function (e) {
+	            let id = $(this).attr('data-tipid');
+	            let rub = $("#bb_aj_saveBoktipRubrik").html();
+	            let content = tinyMCE.activeEditor.getContent();
+
+	            servicecall.savetip(id, rub, content, function () {              
+	                that.updatetable();                          
+	            });
+
+	            $("#bb_aj_modalContainer").hide();
+	            return false;
+	        });
 	    },
 	    EventHandler: function () {
 	        _dtEvent.init();
+	        _hh_helper.init();
 	    },
-	    serviceHandler: function () {
+	    updatetable: function () {
+
+	        let valdlist, urlen, cssdiv;
+	        if (this.$bb_aj_boktipsAdminList.is(':visible')) {
+	            valdlist = this.$bb_aj_boktipsAdminList;
+	            urlen = appsettings.api.boktipslistor.getboktipslistToApprove();
+	            cssdiv = "#bb_aj_boktipsAdminList"
+	            
+	        }
+	        else {
+	            if (this.$bb_aj_boktipsAdminALLList.is(':visible')) {
+	                valdlist = this.$bb_aj_boktipsAdminALLList
+	                urlen = appsettings.api.boktipslistor.getboktipslistAll();
+	                cssdiv = "#bb_aj_boktipsAdminALLList"                
+	            };
+	        };      
+	       
+	        let datatables = valdlist.DataTable();
+	        datatables.destroy();
+	        valdlist.hide();
+	        this.serviceHandler(cssdiv, urlen, function () {
+	            valdlist.show();
+	        });
+	    },
+	    serviceHandler: function (cssSelector,url, callback) {
 	        //let jsondatapromise = _service.getjsondata('https://www2.barnensbibliotek.se/Api_v3.1/boktips/typ/ByUserId/val/7017/txtval/0/devkey/alf/?type=json');
-	        let jsondatapromise = _service.getjsondata(appsettings.api.boktipslistor.getboktipslistToApprove());
+	        let jsondatapromise = _service.getjsondata(url);
 
 	        jsondatapromise.then(jsondata => {
 
 	            appsettings.dataset.currentdatalist = jsondata;
 
-	            _hh.injecthtmltemplate("#bb_aj_boktipsAdminList", appsettings.handlebartemplate.hb_booktipList_tmp, jsondata, function () {
+	            _hh.injecthtmltemplate(cssSelector, appsettings.handlebartemplate.hb_booktipList_tmp, jsondata, function () {
 	                console.log("funkar1:" + appsettings.dataset.currentdatalist);
-	                _dt.RunDataTable('#bb_aj_boktipsAdminList');
+	                _dt.RunDataTable(cssSelector);
 	                console.log("funkar2:" + appsettings.dataset.currentdatalist);
+	                callback();
 	            });
 	        });    
 	    },
 	    render: function () {
-	        this.serviceHandler();
 	        
+	        this.serviceHandler("#bb_aj_boktipsAdminList", appsettings.api.boktipslistor.getboktipslistToApprove(), function () { });
+	        //this.serviceHandler("#bb_aj_boktipsAdminALLList", appsettings.api.boktipslistor.getboktipslistAll());
 	    }
 	}
 
@@ -25143,20 +25228,14 @@
 	            that.$bb_aj_modalContainer.show();
 	            return false;
 	        });
+
 	        this.$body.on('click', '.bb_aj_delete', function (e) {
 	            let id = $(this).attr('data-tipid');
 	            fillobj.deleteitemBox(id);
 	            that.$bb_aj_modalContainer.show();
 	            return false;
 	        });
-
-	        this.$body.on('click', '.bb_aj_Deleteboktips', function (e) {
-	            let id = $(this).attr('data-tipid');
-	            fillobj.deleteitemBox(id);
-	            that.$bb_aj_modalContainer.show();
-	            return false;
-	        });
-
+	       
 	        this.$body.on('change', '.bb_aj_valtboktips', function (e) {
 	            let id = $(this).attr('data-tipid');
 	            let val = 0;
@@ -25165,20 +25244,28 @@
 	               val = 1;               
 	            }
 	            if (servicecall.approvetip(id, val)) {
-	                alert("funkar");
+	                console.log("approved json");
 	            };
 
 	            $(this).val(this.checked); 
 	            return false;
 	        });
 
+	        this.$body.on('click', '#bb_aj_SaveEditToServer', function (e) {
+	            let id = $(this).attr('data-tipid');                        
+	            let rub = $("#bb_aj_cur_title").val();
+
+	            fillobj.saveitemBox(id,rub);
+	            that.$bb_aj_modalContainer.show();
+	            
+	            return false;
+	        });
+	               
 	        this.$body.on('click', '.bb_aj_closeModal', function (e) {
 	            that.$bb_aj_modalContainer.hide();
 	            return false;
 	        });
-
-	        
-
+	                
 	    },
 	    render: function () {
 
@@ -25208,13 +25295,23 @@
 	            return true;
 	        });             
 	    },
+	    saveitemBox: function (tipid, rub) {
+	        let obj = { "TipID": tipid, "rubrik": rub};
+
+	        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_savebox_tmp, obj, function () {
+	            return true;
+	        });
+	    },
 	    deleteitemBox: function (tipid) {
 	        let obj = { "TipID": tipid };
 
 	        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_delbox_tmp, obj, function () {            
 	            return true;
 	        });    
-	    }
+	    },
+	    editcontent: function () {
+	        //edt.activeEditor.getContent('');
+	    },
 
 	} //end moduleexport
 
@@ -25270,14 +25367,14 @@
 	
 	module.exports = {
 	    config: (function () {
-	        let _apiserver = "http://localhost:59015";
-	        let _dnnURL = "http://localdev.kivdev.se";
+	        //let _apiserver = "http://localhost:59015";
+	        //let _dnnURL = "http://localdev.kivdev.se";
 	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
 	        //let _dnnURL = "http://dev1.barnensbibliotek.se";
 	        //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
 	        //let _dnnURL = "http://nytt.barnensbibliotek.se";
-	        //let _apiserver = "https://www2.barnensbibliotek.se";
-	        //let _dnnURL = "https://www.barnensbibliotek.se";
+	        let _apiserver = "https://www2.barnensbibliotek.se";
+	        let _dnnURL = "https://www.barnensbibliotek.se";
 	        let _devkey = "alf";
 	        let _apidevkeyend = "/devkey/" + _devkey + "/?type=jsonp&callback=?";
 	        let _htmltemplateURL = "/DesktopModules/bb_aj_Boktips_Admin/template/";        
@@ -25286,14 +25383,18 @@
 	        
 	        let _hb_booktipList_template = _htmltemplateURL + "template_datatableRow.txt";   
 	        let _hb_editor_template = _htmltemplateURL + "template_editor.txt"; 
-	        let _hb_deletbox_template = _htmltemplateURL + "template_tabort.txt";
+	        let _hb_savebox_template = _htmltemplateURL + "template_save.txt";
+	        let _hb_deletebox_template = _htmltemplateURL + "template_tabort.txt";
 	        
 	        // användarens senaste boktips
 	        let _fn_booktipList = function (userid) {
 	            return _apiserver + "/Api_v1/boktips/bylatest/1/devkey/" + _devkey + "/?type=json";
 	        }
+	        let _fn_booktipSave = function () {
+	            return _apiserver + "/Api_v3.1/boktips/typ/editboktips/devkey/" + _devkey + "/?type=jsonp";
+	        }
 	        let _fn_booktipDelete = function () {            
-	            return _apiserver + "/Api_v3.1/boktips/typ/addboktips/devkey/" + _devkey + "/?type=json";
+	            return _apiserver + "/Api_v3.1/boktips/typ/deleteboktips/devkey/" + _devkey + "/?type=json";
 	        }
 	        let _fn_booktipApprove = function (tipid, val) {
 	            return _apiserver + "/Api_v3.1/boktips/typ/approve/val/" + tipid + "/txtval/" + val + "/devkey/" + _devkey + "/?type=json";
@@ -25313,7 +25414,8 @@
 	            handlebartemplate: {
 	                hb_booktipList_tmp: _hb_booktipList_template,
 	                hb_editor_tmp: _hb_editor_template,
-	                hb_delbox_tmp: _hb_deletbox_template
+	                hb_savebox_tmp: _hb_savebox_template,
+	                hb_delbox_tmp: _hb_deletebox_template
 	            },
 	            api: {                
 	                boktipslistor: {
@@ -25321,6 +25423,7 @@
 	                    getboktipslistAll: _fn_booktipListAll
 	                },
 	                approve: _fn_booktipApprove,
+	                save: _fn_booktipSave,
 	                delete: _fn_booktipDelete,
 	                autocomplete: {
 	                    geturl: ""
@@ -25343,8 +25446,8 @@
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	
-	let _service = __webpack_require__(10);
+	let _service_old = __webpack_require__(10);
+	let _service = __webpack_require__(11);
 	let appsettingsobject = __webpack_require__(8);
 	let appsettings = appsettingsobject.config;
 
@@ -25356,36 +25459,82 @@
 	            .then(jsondata => { return true; })
 	            .catch(err => false);
 	    },
-	    deletetip: function (tipid) {
-	        let dataopt = {
-	            "Approved": "0",
-	            "Author": "",
-	            "Bookid": "",
-	            "Title": "",
-	            "Userage": "0",
-	            "HighAge": "0",
-	            "LowAge": "0",
-	            "Review": "",
-	            "Tiptype": "0",
-	            "Userid": "",
-	            "UserName": "",
-	            "Category": "0",
+	    deletetip: function (tipid, callback) {
+	        let dataopt = {           
 	            "TipID": tipid
 	        }
 
-	        let jsondatapromise = _service.fetchjsonpdata(appsettings.api.delete, dataopt);
+	        _service_old.postjsondata(appsettings.api.delete(), dataopt, function (data) {
+	            callback(data);
+	        });      
 
-	        jsondatapromise
-	            .then(jsondata => { return true; })
-	            .catch(err => false);
-	       
+	    },
+	    savetip: function (tipid, rubrik, content, callback) {
+	        let dataopt = {
+	            "TipID": tipid,
+	            "Title": rubrik,            
+	            "Review": content  
+	        }
+
+	        _service_old.postjsondata(appsettings.api.save(), dataopt, function (data) {
+	            callback(data);
+	        });
 
 	    }
-	    
 	}
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(2);
+
+	module.exports = {
+	    getjsondata: function (url, callback) {
+	        if (!url) {
+	            return false;
+	        } else {
+	            //console.log("Searchservicen hämtar Arrangemangdata");
+	            $.ajax({
+	                async: true,
+	                type: "get",
+	                dataType: 'jsonp',
+	                url: url,
+	                success: function (data) {
+	                    console.log("Search Detalj arrangemang hämtat: ");
+	                    callback(data);
+	                },
+	                error: function (xhr, ajaxOptions, thrownError) {
+	                    alert("Nått blev fel vid hämtning av arrangemang!");
+	                }
+	            })
+	        };
+	    },
+	    postjsondata: function (url, postdata, callback) {
+	        if (!url) {
+	            return false;
+	        } else {
+	            //console.log("Searchservicen hämtar Arrangemangdata");
+	            $.ajax({
+	                async: true,
+
+	                type: "post",
+	                url: url,
+	                data: postdata,
+	                success: function (data) {
+	                    console.log("Hämtar Data: ");
+	                    callback(data);
+	                },
+	                error: function (xhr, ajaxOptions, thrownError) {
+	                    alert("Nått blev fel vid hämtning av POST json!");
+	                }
+	            })
+	        };
+	    }
+	}
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 	
@@ -25395,6 +25544,22 @@
 	            .then(res => res.json())
 	            .then(jsondata => jsondata)
 	            
+	    },
+	    postjsondata: function (url, postdata) {
+
+	        const option = {
+	            method: 'POST', 
+	            mode:"no-cors",
+	            body: JSON.stringify(postdata),
+	            headers: {
+	                "Content-Type": "application/json"
+	            }
+
+	        }
+	        return fetch(url, option)
+	            .then(res => res.json())
+	            .then(jsondata => jsondata)
+
 	    },
 	    fetchjsonpdata: function (url, postdata) {
 	        //postdata= { data: medskick, merdata: mera }
@@ -25411,6 +25576,27 @@
 	    }
 	}
 
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	
+	let appsettingsobject = __webpack_require__(8);
+	let appsettings = appsettingsobject.config;
+
+	module.exports = {
+	    init: function () {
+
+	        Handlebars.registerHelper('checkapproved', function (Approve) {                        
+	            if (Approve==1) {
+	               return  "checked";
+	            };            
+	        });
+
+	       
+	    }
+	}
 
 /***/ })
 /******/ ]);

@@ -3,7 +3,7 @@
             <th>Godkänd</th>
             <th class="hidden-xs">UID</th>                
             <th>Användare</th>
-            <th>Boktips</th>
+            <th>Boktitel/Boktips</th>
             <th><em class="fa fa-cog"></em></th>
         </tr>
 </thead>
@@ -13,13 +13,15 @@
 		<tr class="bb_aj_boktips_Item_Row" data-tipid="{{TipID}}">
 			<td class="buttonBlock">
 				<a class="btn btn-default">
-					<input type="checkbox" class="bb_aj_valtboktips" data-tipid="{{TipID}}" />
+					<input type="checkbox" class="bb_aj_valtboktips" data-tipid="{{TipID}}" {{#checkapproved Approved}} {{/checkapproved}}/>
 					<span class="kk_aj_approved" style="display:none;">{{Approved}}</span></a>
 			</td>
 			<td class="hidden-xs">{{Userid}}</td>
 			<td>{{UserName}}</td>
                 
-			<td>{{{Review}}}
+			<td>
+			<h5>{{{Title}}}</h5>
+			{{{Review}}}
 			</td>
 			<td class="buttonBlock">
 				<a class="btn btn-default bb_aj_approve" data-tipid="{{TipID}}"><em class="fas fa-pencil-alt"></em></a>

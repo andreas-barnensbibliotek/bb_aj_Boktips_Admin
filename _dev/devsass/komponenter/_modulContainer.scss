@@ -13,10 +13,12 @@
     cursor: pointer;
 
     .bb_aj_modalheader {
+        h3 {
+            float: left;
+        }
+
         .buttonblock {
             float: right;
-
-          
         }
     }
 
@@ -35,5 +37,20 @@
         max-height: 60%;
         height: 70%;
         width: 54%;
+    }
+
+    .bekraftaModalbox {
+        padding-top: 2.0rem;
+        text-align: center;
+        margin-top:2.0rem;
+
+        h2 {
+            margin-bottom: 2.0rem;
+            text-align: center;
+        }
+    }
+
+    .modalcontentblock {
+        clear: both;
     }
 }

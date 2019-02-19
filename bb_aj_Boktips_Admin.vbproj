@@ -129,6 +129,13 @@
   <ItemGroup>
     <Content Include="config\webpack.config.js" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\dataTables.bootstrap.css" />
+    <Content Include="css\datatables.css" />
+    <Content Include="css\datatables.min.css" />
+    <Content Include="css\img\Close.png" />
+    <Content Include="css\img\delete.png" />
+    <Content Include="css\img\Edit.png" />
+    <Content Include="css\img\save.png" />
     <Content Include="Documentation\Documentation.css" />
     <Content Include="Documentation\Documentation.html" />
     <Content Include="Edit.ascx" />
@@ -229,19 +236,29 @@
     <Content Include="ReleaseNotes.txt" />
     <Content Include="Settings.ascx" />
     <Content Include="template\template_datatableRow.txt" />
+    <Content Include="template\template_editor.txt" />
+    <Content Include="template\template_save.txt" />
+    <Content Include="template\template_tabort.txt" />
     <Content Include="View.ascx" />
     <Content Include="_dev\devjs\app.js" />
     <Content Include="_dev\devjs\jsmoduler\appsettings.js" />
     <Content Include="_dev\devjs\jsmoduler\dataTablehandler\DataTableEvent.js" />
     <Content Include="_dev\devjs\jsmoduler\dataTablehandler\DataTableMainHandler.js" />
     <Content Include="_dev\devjs\jsmoduler\dataTablehandler\datatables.js" />
+    <Content Include="_dev\devjs\jsmoduler\event\mainEventHandler.js" />
     <Content Include="_dev\devjs\jsmoduler\external\editor.js" />
-    <Content Include="_dev\devjs\jsmoduler\external\mceEditor.js" />
     <Content Include="_dev\devjs\jsmoduler\external\tinymceEditorSettings.js" />
     <Content Include="_dev\devjs\jsmoduler\Handlebar\handlebarHandler.js" />
+    <Content Include="_dev\devjs\jsmoduler\Handlebar\handlebar_Helpers.js" />
+    <Content Include="_dev\devjs\jsmoduler\helpers\fillEditorContent.js" />
     <Content Include="_dev\devjs\jsmoduler\main.js" />
     <Content Include="_dev\devjs\jsmoduler\Service\OldServicehandler.js" />
+    <Content Include="_dev\devjs\jsmoduler\Service\serviceCallHandler.js" />
     <Content Include="_dev\devjs\jsmoduler\Service\servicehandler_Fetch.js" />
+    <Content Include="_dev\devsass\bb_aj_boktipsadmin.scss" />
+    <Content Include="_dev\devsass\komponenter\_base.scss" />
+    <Content Include="_dev\devsass\komponenter\_boktipslistan.scss" />
+    <Content Include="_dev\devsass\komponenter\_modulContainer.scss" />
     <Content Include="_dev\jsbundle\aj_bb_boktipsadmin_KrypinbundleWebpack.1.0.js" />
     <Content Include="_dev\jsbundle\datatables\datatables.js" />
     <Content Include="_dev\jsbundle\datatables\datatables.min.js" />
@@ -288,10 +305,8 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
-    <Content Include="_dev\devsass\bb_aj_boktipsadmin.scss" />
-    <Content Include="_dev\devsass\komponenter\_base.scss" />
-    <Content Include="_dev\devsass\komponenter\_boktipslistan.scss" />
-    <Content Include="_dev\devsass\komponenter\_modulContainer.scss" />
+    <Content Include="_dev\devjs\jsmoduler\dataTablehandler\DataTableMainHandler_new.js.exclude" />
+    <Content Include="_dev\devjs\jsmoduler\dataTablehandler\datatables_new.js.exclude" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
