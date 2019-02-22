@@ -5,7 +5,7 @@ let appsettings = appsettingsobject.config;
 
 module.exports = {
     
-    getCurrentItem: function (id) {
+    getCurrentItem: function (id,callback) {
         let _currentobj = appsettings.dataset.currentdatalist;
 
         let currobj = _currentobj.Boktips.filter(item => item.TipID == id);
@@ -14,13 +14,13 @@ module.exports = {
             edt.remove();
             edt.init("#bb_aj_modalbody");
                        
-            return true;
+            callback();
         });             
     },
-    saveitemBox: function (tipid, rub) {
-        let obj = { "TipID": tipid, "rubrik": rub};
+    saveitemBox: function (saveObj) {        
+        appsettings.dataset.saveboktipObj = saveObj;
 
-        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_savebox_tmp, obj, function () {
+        _hh.injecthtmltemplate("#bb_aj_modalContainer", appsettings.handlebartemplate.hb_savebox_tmp, saveObj, function () {
             return true;
         });
     },

@@ -62,6 +62,7 @@ gulp.task('jsconcatfiles', gulp.series('webpackjs', function (done) {
     return gulp.src(
         [            
             srcPath.jsbundle + '/handelbars/handlebars.js',
+            srcPath.jsbundle + '/autocomplete/auto-complete.js',
             srcPath.jsbundle + '/aj_bb_boktipsadmin_KrypinbundleWebpack.1.0.js',
         ]
     )

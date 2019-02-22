@@ -10,6 +10,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   cursor: pointer; }
+  #bb_aj_modalContainer h4 {
+    margin-top: 1rem; }
   #bb_aj_modalContainer .bb_aj_modalheader h3 {
     float: left; }
   #bb_aj_modalContainer .bb_aj_modalheader .buttonblock {
@@ -45,6 +47,8 @@
   #bb_aj_boktipsAdmin_Mod .buttonBlock {
     min-width: 50px;
     text-align: center; }
+    #bb_aj_boktipsAdmin_Mod .buttonBlock .bb_aj_approve {
+      float: left; }
   #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(even) {
     background: #CCC; }
   #bb_aj_boktipsAdmin_Mod #bb_aj_boktipsAdminList tr:nth-child(odd) {

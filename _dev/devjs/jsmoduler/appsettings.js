@@ -1,14 +1,14 @@
 ﻿
 module.exports = {
     config: (function () {
-        //let _apiserver = "http://localhost:59015";
-        //let _dnnURL = "http://localdev.kivdev.se";
+        let _apiserver = "http://localhost:59015";
+        let _dnnURL = "http://localdev.kivdev.se";
         //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
         //let _dnnURL = "http://dev1.barnensbibliotek.se";
         //let _apiserver = "http://dev1.barnensbibliotek.se:8080";
         //let _dnnURL = "http://nytt.barnensbibliotek.se";
-        let _apiserver = "https://www2.barnensbibliotek.se";
-        let _dnnURL = "https://www.barnensbibliotek.se";
+        //let _apiserver = "https://www2.barnensbibliotek.se";
+        //let _dnnURL = "https://www.barnensbibliotek.se";
         let _devkey = "alf";
         let _apidevkeyend = "/devkey/" + _devkey + "/?type=jsonp&callback=?";
         let _htmltemplateURL = "/DesktopModules/bb_aj_Boktips_Admin/template/";        
@@ -39,6 +39,10 @@ module.exports = {
         let _fn_booktipListAll = function () {
             return _apiserver + "/Api_v3.1/boktips/typ/getall/val/0/txtval/0/devkey/" + _devkey + "/?type=json";
         }
+        // autocompleteURL
+        let _fn_autocompleteURL = function (antal) {
+            return _apiserver + "/Api_v3.1/katalogen/cmdtyp/autocomplete/antal/" + antal + "/devkey/" + _devkey + "/?type=json";
+        };
            
         return {
             apiserver: _apiserver,
@@ -60,12 +64,13 @@ module.exports = {
                 save: _fn_booktipSave,
                 delete: _fn_booktipDelete,
                 autocomplete: {
-                    geturl: ""
+                    geturl: _fn_autocompleteURL
                 },                
                 devkeyend: _apidevkeyend
             },
             dataset: {
-                currentdatalist:  _currentdatalist
+                currentdatalist: _currentdatalist,
+                saveboktipObj: {}
             },
 
             debug: "false"

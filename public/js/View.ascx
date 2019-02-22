@@ -22,4 +22,4 @@
 <div id="bb_aj_modalContainer">    
 </div>
 <script src="<%=ResolveUrl("public/js/tinymce/tinymce.min.js")%>" type="text/javascript"></script>
-<script src="<%=ResolveUrl("public/js/aj_bb_boktipsadmin_bundle.1.0.2.js")%>" type="text/javascript"></script>
+<script src="<%=ResolveUrl("public/js/aj_bb_boktipsadmin_bundle.1.0.5.js")%>" type="text/javascript"></script>

@@ -5,6 +5,9 @@
     .buttonBlock {
         min-width: 50px;
         text-align: center;
+        .bb_aj_approve{
+            float:left;
+        }
     }
 
     #bb_aj_boktipsAdminList {
@@ -41,6 +44,4 @@
         text-decoration: none;
         color: #ccc;
     }
-
 }
-

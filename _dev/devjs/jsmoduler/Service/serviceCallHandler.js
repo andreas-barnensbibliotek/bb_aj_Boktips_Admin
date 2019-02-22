@@ -22,15 +22,12 @@ module.exports = {
 
     },
     savetip: function (tipid, rubrik, content, callback) {
-        let dataopt = {
-            "TipID": tipid,
-            "Title": rubrik,            
-            "Review": content  
-        }
+        let dataopt = appsettings.dataset.saveboktipObj;
 
-        _service_old.postjsondata(appsettings.api.save(), dataopt, function (data) {
-            callback(data);
-        });
-
+        if (tipid === dataopt.TipID) {
+            _service_old.postjsondata(appsettings.api.save(), dataopt, function (data) {
+                    callback(data);
+            });
+        };
     }
 }
